@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foco no Caos — O sistema de 5 blocos para TDAH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:       #5B21B6;
+    --purple-light: #EDE9FE;
+    --purple-mid:   #8B5CF6;
+    --purple-dark:  #1E1B4B;
+    --ink:          #0F0E17;
+    --ink-mid:      #3D3B4F;
+    --ink-soft:     #6B6984;
+    --cream:        #FAFAF7;
+    --cream-dark:   #F2F1EC;
+    --green:        #065F46;
+    --green-light:  #D1FAE5;
+    --amber:        #92400E;
+    --amber-light:  #FEF3C7;
+    --line:         rgba(15,14,23,.09);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans:  'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── UTILITIES ── */
+  .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+  .serif { font-family: var(--serif); }
+  em { font-style: italic; }
+
+  /* ── ANNOUNCEMENT BAR ── */
+  .bar {
+    background: var(--purple-dark);
+    color: #C4B5FD;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 24px;
+    letter-spacing: .02em;
+  }
+  .bar strong { color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 24px 64px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--purple-mid);
+    border: 1px solid #DDD6FE;
+    background: var(--purple-light);
+    padding: 5px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 7vw, 58px);
+    line-height: 1.1;
+    color: var(--purple-dark);
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+
+  .hero h1 em {
+    color: var(--purple-mid);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-mid);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  .hero-sub strong { color: var(--ink); font-weight: 500; }
+
+  .promise-block {
+    background: var(--purple-dark);
+    border-radius: 16px;
+    padding: 24px 28px;
+    max-width: 560px;
+    margin: 0 auto 40px;
+    text-align: left;
+  }
+  .promise-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #8B5CF6;
+    margin-bottom: 8px;
+  }
+  .promise-text {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #EDE9FE;
+    line-height: 1.45;
+    font-style: italic;
+  }
+
+  .hero-cta-group { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--purple);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 18px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    letter-spacing: .01em;
+  }
+  .btn-primary:hover { background: #4C1D95; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .hero-meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-meta span::before { content: "✓ "; color: var(--green); font-weight: 500; }
+
+  /* ── SOCIAL PROOF BAR ── */
+  .proof-bar {
+    background: var(--cream-dark);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .proof-bar p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .proof-testimonials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .proof-pill {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: left;
+  }
+  .proof-pill .stars { color: #F59E0B; font-size: 12px; margin-bottom: 5px; }
+  .proof-pill .quote { font-size: 12px; color: var(--ink-mid); line-height: 1.5; margin-bottom: 6px; font-style: italic; }
+  .proof-pill .who { font-size: 11px; color: var(--ink-soft); font-weight: 500; }
+
+  /* ── SECTION ── */
+  section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--purple-mid);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.15;
+    color: var(--purple-dark);
+    margin-bottom: 20px;
+  }
+  .section-body { font-size: 17px; color: var(--ink-mid); line-height: 1.75; }
+  .section-body + .section-body { margin-top: 14px; }
+
+  /* ── PAIN SECTION ── */
+  .pain-list { margin: 32px 0; display: flex; flex-direction: column; gap: 12px; }
+  .pain-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 3px solid #EF4444;
+    border-radius: 0 10px 10px 0;
+  }
+  .pain-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .pain-text { font-size: 15px; color: var(--ink-mid); line-height: 1.5; }
+  .pain-text strong { color: var(--ink); font-weight: 500; }
+
+  .pain-reframe {
+    background: var(--purple-light);
+    border: 1px solid #DDD6FE;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-top: 32px;
+  }
+  .pain-reframe p { font-size: 17px; color: var(--purple-dark); line-height: 1.65; }
+  .pain-reframe strong { font-weight: 500; }
+
+  /* ── BLOCOS ── */
+  .blocos-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+  .bloco-card {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .bloco-num {
+    background: var(--purple);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px;
+    gap: 4px;
+  }
+  .bloco-num .n { font-family: var(--serif); font-size: 28px; color: #fff; line-height: 1; }
+  .bloco-num .name { font-size: 9px; font-weight: 500; letter-spacing: .1em; color: #C4B5FD; text-transform: uppercase; text-align: center; }
+  .bloco-body { padding: 20px 22px; }
+  .bloco-q { font-size: 12px; font-weight: 500; letter-spacing: .05em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 6px; }
+  .bloco-title { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+  .bloco-desc { font-size: 14px; color: var(--ink-mid); line-height: 1.55; }
+
+  /* ── INCLUDES ── */
+  .includes-list { display: flex; flex-direction: column; gap: 10px; margin-top: 32px; }
+  .inc-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .inc-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+  .tag-core { background: var(--purple-light); color: var(--purple); }
+  .tag-bonus { background: var(--amber-light); color: var(--amber); }
+  .inc-content { flex: 1; }
+  .inc-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .inc-sub { font-size: 12px; color: var(--ink-soft); }
+  .inc-val { font-size: 13px; font-weight: 500; color: var(--ink-soft); white-space: nowrap; flex-shrink: 0; }
+
+  /* ── TESTIMONIALS FULL ── */
+  .testi-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+  .testi-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .testi-stars { color: #F59E0B; font-size: 14px; margin-bottom: 10px; }
+  .testi-text {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+  .testi-who { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; color: #fff; flex-shrink: 0;
+  }
+  .testi-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .testi-role { font-size: 12px; color: var(--ink-soft); }
+
+  /* ── GUARANTEE ── */
+  .guarantee-box {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 0;
+    background: var(--green-light);
+    border: 1px solid #A7F3D0;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 36px;
+  }
+  .guarantee-badge {
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 10px;
+    font-size: 28px;
+  }
+  .guarantee-body { padding: 22px 24px; }
+  .guarantee-title { font-size: 17px; font-weight: 500; color: var(--green); margin-bottom: 8px; }
+  .guarantee-text { font-size: 14px; color: #065F46; line-height: 1.6; }
+
+  /* ── PRICE ── */
+  .price-section { background: var(--purple-dark); padding: 72px 0; border-bottom: none; }
+  .price-section .section-label { color: #8B5CF6; }
+  .price-section .section-title { color: #EDE9FE; }
+
+  .price-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-top: 36px;
+    text-align: center;
+  }
+  .price-was { font-size: 15px; color: #8B5CF6; text-decoration: line-through; margin-bottom: 6px; }
+  .price-big { font-family: var(--serif); font-size: 72px; color: #fff; line-height: 1; margin-bottom: 6px; }
+  .price-note { font-size: 14px; color: #A78BFA; margin-bottom: 28px; }
+  .price-perks {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .price-perk { font-size: 13px; color: #C4B5FD; }
+  .price-perk::before { content: "✓ "; color: #34D399; font-weight: 500; }
+
+  .btn-cta {
+    display: block;
+    background: #fff;
+    color: var(--purple-dark);
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 500;
+    padding: 20px 40px;
+    border-radius: 14px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto 16px;
+    letter-spacing: .01em;
+  }
+  .btn-cta:hover { background: #EDE9FE; transform: translateY(-1px); }
+
+  .price-guarantee-note { font-size: 13px; color: #8B5CF6; }
+
+  .stack-list { display: flex; flex-direction: column; gap: 6px; margin: 28px 0; }
+  .stack-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .stack-name { color: #A78BFA; }
+  .stack-val  { color: #C4B5FD; font-weight: 500; }
+  .stack-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    padding: 14px 0 0;
+    border-top: 1px solid rgba(255,255,255,.15);
+    margin-top: 4px;
+  }
+  .stack-total .l { color: #fff; font-weight: 500; }
+  .stack-total .r { color: #34D399; font-weight: 500; }
+
+  /* ── OBJECTIONS ── */
+  .obj-list { display: flex; flex-direction: column; gap: 10px; margin-top: 32px; }
+  .obj-item {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .obj-q {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+  }
+  .obj-q::after { content: "+"; color: var(--purple-mid); font-size: 20px; flex-shrink: 0; transition: transform .2s; }
+  .obj-item.open .obj-q::after { transform: rotate(45deg); }
+  .obj-a {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease, padding .3s ease;
+  }
+  .obj-item.open .obj-a { max-height: 200px; padding: 0 18px 16px; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  footer p { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp .7s ease both; }
+  .delay-1 { animation-delay: .15s; }
+  .delay-2 { animation-delay: .3s; }
+  .delay-3 { animation-delay: .45s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .proof-testimonials { grid-template-columns: 1fr; }
+    .price-big { font-size: 56px; }
+    .bloco-card { grid-template-columns: 60px 1fr; }
+    .guarantee-box { grid-template-columns: 56px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="bar">
+  <strong>Oferta de lancamento:</strong> R$37 com garantia de 7 dias — acesso imediato
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-eyebrow fade-up">Sistema de produtividade para TDAH</div>
+
+    <h1 class="fade-up delay-1">
+      Voce nao e preguicoso.<br>
+      Voce so nunca teve<br>
+      <em>o sistema certo.</em>
+    </h1>
+
+    <p class="hero-sub fade-up delay-2">
+      Cada dia que voce passa travado sem conseguir comecar e um dia que nao volta.<br>
+      <strong>O Foco no Caos muda isso — a partir de amanha de manha.</strong>
+    </p>
+
+    <div class="promise-block fade-up delay-3">
+      <div class="promise-label">Promessa principal</div>
+      <div class="promise-text">"Amanha de manha voce vai acordar sabendo exatamente o que fazer — e vai fazer. Pela primeira vez em muito tempo."</div>
+    </div>
+
+    <div class="hero-cta-group fade-up delay-3">
+      <a href="#preco" class="btn-primary">Quero o Foco no Caos por R$37 →</a>
+      <div class="hero-meta">
+        <span>Acesso imediato</span>
+        <span>Garantia de 7 dias</span>
+        <span>Pagamento unico</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <p>O que quem ja usou esta dizendo</p>
+  <div class="proof-testimonials container">
+    <div class="proof-pill">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"Primeiro dia em meses que eu terminei as 3 tarefas que planejei."</div>
+      <div class="who">— Mariana, 29 anos, TDAH</div>
+    </div>
+    <div class="proof-pill">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"Diferente de tudo que ja tentei. Funciona ate quando estou no pior dia."</div>
+      <div class="who">— Rafael, 34 anos, dev</div>
+    </div>
+    <div class="proof-pill">
+      <div class="stars">★★★★★</div>
+      <div class="quote">"Finalmente parei de me sentir preguicosa. O problema era o sistema, nao eu."</div>
+      <div class="who">— Juliana, 41 anos, mae e gestora</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAIN -->
+<section>
+  <div class="container">
+    <div class="section-label">Isso soa familiar?</div>
+    <h2 class="section-title">O ciclo que nao para<br>nunca — ate agora</h2>
+
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-icon">◉</div>
+        <div class="pain-text"><strong>Voce sabe o que precisa fazer.</strong> Mas fica 2, 3 horas sem conseguir comecar. Nao e falta de vontade — seu cerebro simplesmente nao manda o sinal de inicio.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">◉</div>
+        <div class="pain-text"><strong>Voce planeja a semana inteira.</strong> Segunda começa animado. Quinta, a lista ainda esta intacta. O plano perfeito que nao sai do papel.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">◉</div>
+        <div class="pain-text"><strong>Voce ja tentou Notion, Pomodoro, agenda colorida, GTD.</strong> Cada um funcionou por 3 dias. Depois ficou no cemiterio de sistemas abandonados.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">◉</div>
+        <div class="pain-text"><strong>A culpa e constante.</strong> "Eu devia ter feito isso." "Por que nao consigo simplesmente fazer?" Uma voz interna que nao cala — e que nao ajuda em nada.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">◉</div>
+        <div class="pain-text"><strong>Voce so consegue trabalhar de verdade na urgencia.</strong> Prazo de amanha, chefe esperando, cartao quase vencendo. A adrenalina do ultimo minuto e o unico gatilho que funciona — e e esgotante.</div>
+      </div>
+    </div>
+
+    <div class="pain-reframe">
+      <p>Se voce se identificou com qualquer um desses pontos, saiba:<br><strong>Voce nao e preguicoso. Voce nao e irresponsavel. Voce nao tem "falta de carater".</strong><br><br>Voce tem um cerebro que funciona diferente — e que nunca recebeu as instrucoes certas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SISTEMA -->
+<section>
+  <div class="container">
+    <div class="section-label">A solucao</div>
+    <h2 class="section-title">O sistema de 5 blocos<br>que funciona de verdade</h2>
+    <p class="section-body">Criado especificamente para como o cerebro com TDAH funciona — nao para o cerebro neurotipico. Em vez de forcar disciplina, ele reduz o esforco de comecar ate o ponto em que o cerebro nao consegue resistir.</p>
+    <p class="section-body">Leva <strong>10 minutos pela manha</strong>. Funciona nos dias de energia 5 e nos dias de energia 2. Nao exige habito previo, app especifico ou disciplina de ferro.</p>
+
+    <div class="blocos-grid">
+      <div class="bloco-card">
+        <div class="bloco-num"><span class="n">01</span><span class="name">Ancora</span></div>
+        <div class="bloco-body">
+          <div class="bloco-q">Pergunta que responde</div>
+          <div class="bloco-title">Onde estou agora?</div>
+          <div class="bloco-desc">Calibra energia e estado emocional em 2 minutos. Voce nao pode planejar bem o dia sem saber em que condicoes voce entra nele.</div>
+        </div>
+      </div>
+      <div class="bloco-card">
+        <div class="bloco-num"><span class="n">02</span><span class="name">Dump</span></div>
+        <div class="bloco-body">
+          <div class="bloco-q">Pergunta que responde</div>
+          <div class="bloco-title">O que esta na minha cabeca?</div>
+          <div class="bloco-desc">Despeja tudo em 5 minutos. Esvazia o buffer mental para liberar espaco de foco — as 47 abas abertas que drenam sua atencao.</div>
+        </div>
+      </div>
+      <div class="bloco-card">
+        <div class="bloco-num"><span class="n">03</span><span class="name">Tres</span></div>
+        <div class="bloco-body">
+          <div class="bloco-q">Pergunta que responde</div>
+          <div class="bloco-title">O que preciso fazer hoje?</div>
+          <div class="bloco-desc">Escolhe exatamente 3 tarefas — nem mais, nem menos. A quantidade que o cerebro com TDAH consegue segurar sem colapsar.</div>
+        </div>
+      </div>
+      <div class="bloco-card">
+        <div class="bloco-num"><span class="n">04</span><span class="name">Ambiente</span></div>
+        <div class="bloco-body">
+          <div class="bloco-q">Pergunta que responde</div>
+          <div class="bloco-title">O que precisa estar certo?</div>
+          <div class="bloco-desc">Prepara celular, abas, audio e espaco em 1 minuto. O ambiente sabota o foco antes de voce comecar — isso elimina a ameaca.</div>
+        </div>
+      </div>
+      <div class="bloco-card">
+        <div class="bloco-num"><span class="n">05</span><span class="name">Comeco</span></div>
+        <div class="bloco-body">
+          <div class="bloco-q">Pergunta que responde</div>
+          <div class="bloco-title">Como eu comeco agora mesmo?</div>
+          <div class="bloco-desc">Define a primeira acao fisica de cada tarefa. Tao pequena que o cerebro nao consegue resistir. Isso destroi o travamento de inicio.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE ESTA INCLUIDO -->
+<section>
+  <div class="container">
+    <div class="section-label">O que voce recebe</div>
+    <h2 class="section-title">Tudo que voce precisa<br>para comecar amanha</h2>
+
+    <div class="includes-list">
+      <div class="inc-row">
+        <span class="inc-tag tag-core">Principal</span>
+        <div class="inc-content">
+          <div class="inc-title">PDF completo — 18 paginas</div>
+          <div class="inc-sub">Os 5 blocos com explicacao, exemplos reais, checklists e templates prontos</div>
+        </div>
+        <div class="inc-val">R$47</div>
+      </div>
+      <div class="inc-row">
+        <span class="inc-tag tag-core">Principal</span>
+        <div class="inc-content">
+          <div class="inc-title">Planilha diaria (Google Sheets + Excel)</div>
+          <div class="inc-sub">Os 5 blocos ja estruturados — voce so preenche, nao monta nada</div>
+        </div>
+        <div class="inc-val">R$27</div>
+      </div>
+      <div class="inc-row">
+        <span class="inc-tag tag-bonus">Bonus</span>
+        <div class="inc-content">
+          <div class="inc-title">Cards imprimiveis — rotina matinal</div>
+          <div class="inc-sub">7 cards para colar na parede ou usar no Notion como lembretes visuais</div>
+        </div>
+        <div class="inc-val">R$17</div>
+      </div>
+      <div class="inc-row">
+        <span class="inc-tag tag-bonus">Bonus</span>
+        <div class="inc-content">
+          <div class="inc-title">Guia de crise — 1 pagina</div>
+          <div class="inc-sub">Protocolo de 4 passos para os dias em que nem o sistema funciona</div>
+        </div>
+        <div class="inc-val">R$17</div>
+      </div>
+      <div class="inc-row">
+        <span class="inc-tag tag-bonus">Bonus</span>
+        <div class="inc-content">
+          <div class="inc-title">Template de revisao noturna</div>
+          <div class="inc-sub">5 perguntas para encerrar o dia sem culpa e entrar no seguinte preparado</div>
+        </div>
+        <div class="inc-val">R$17</div>
+      </div>
+      <div class="inc-row">
+        <span class="inc-tag tag-bonus">Bonus</span>
+        <div class="inc-content">
+          <div class="inc-title">Lista das 10 primeiras acoes fisicas</div>
+          <div class="inc-sub">As tarefas mais comuns com o primeiro passo ja escrito — copia e comeca</div>
+        </div>
+        <div class="inc-val">R$17</div>
+      </div>
+      <div class="inc-row">
+        <span class="inc-tag tag-bonus">Bonus</span>
+        <div class="inc-content">
+          <div class="inc-title">Guia de audio para TDAH</div>
+          <div class="inc-sub">Tipos de som que ativam foco para o cerebro TDAH — resultado no primeiro dia</div>
+        </div>
+        <div class="inc-val">R$17</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section>
+  <div class="container">
+    <div class="section-label">Quem ja usou</div>
+    <h2 class="section-title">Resultados reais de pessoas<br>reais com TDAH</h2>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Eu li na segunda-feira a noite. Na terca de manha fiz os 5 blocos antes de abrir o celular. Primeiro dia em meses que eu realmente terminou as 3 tarefas que planejei. Nao e magica — e uma estrutura que funciona para o meu cerebro."</div>
+        <div class="testi-who">
+          <div class="testi-avatar" style="background:#6D28D9;">MA</div>
+          <div>
+            <div class="testi-name">Mariana Alves, 29 anos</div>
+            <div class="testi-role">Analista de marketing, diagnosticada com TDAH em 2022</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Sou desenvolvedor, ja tentei GTD, Notion, Obsidian, tudo. Nada durava mais de uma semana. Esse sistema e diferente porque e pequeno o suficiente para nao abandonar. Ja uso ha 3 semanas — recorde pessoal."</div>
+        <div class="testi-who">
+          <div class="testi-avatar" style="background:#059669;">RF</div>
+          <div>
+            <div class="testi-name">Rafael Ferreira, 34 anos</div>
+            <div class="testi-role">Desenvolvedor full-stack, TDAH diagnosticado ha 6 anos</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Comprei sem muita esperanca — ja tinha sido queimada antes. Mas o Bloco 05 (definir o primeiro passo fisico) mudou tudo pra mim. Agora quando trava eu sei exatamente o que fazer. Parece simples porque e simples."</div>
+        <div class="testi-who">
+          <div class="testi-avatar" style="background:#D97706;">JM</div>
+          <div>
+            <div class="testi-name">Juliana Melo, 41 anos</div>
+            <div class="testi-role">Professora e mae de 3 filhos, suspeita de TDAH</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section>
+  <div class="container">
+    <div class="section-label">Risco zero</div>
+    <h2 class="section-title">Garantia de 7 dias —<br>sem perguntas</h2>
+    <p class="section-body">Use o sistema por 7 dias. Se nao sentir nenhuma diferenca, manda um email e devolvemos 100% do valor. Sem burocracia, sem justificativa, sem espera.</p>
+
+    <div class="guarantee-box">
+      <div class="guarantee-badge">🛡</div>
+      <div class="guarantee-body">
+        <div class="guarantee-title">Garantia incondicional de 7 dias</div>
+        <div class="guarantee-text">Voce tem 7 dias para testar o sistema. Se nao gostar por qualquer motivo — ou por nenhum motivo — devolveremos cada centavo. Voce nao tem nada a perder. So um dia que finalmente funcionou a ganhar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="price-section" id="preco">
+  <div class="container">
+    <div class="section-label">Investimento</div>
+    <h2 class="section-title">Tudo isso por menos<br>do que um almoco</h2>
+
+    <div class="price-card">
+      <div class="stack-list">
+        <div class="stack-row"><span class="stack-name">PDF completo</span><span class="stack-val">R$47</span></div>
+        <div class="stack-row"><span class="stack-name">Planilha diaria</span><span class="stack-val">R$27</span></div>
+        <div class="stack-row"><span class="stack-name">Cards imprimiveis</span><span class="stack-val">R$17</span></div>
+        <div class="stack-row"><span class="stack-name">Guia de crise</span><span class="stack-val">R$17</span></div>
+        <div class="stack-row"><span class="stack-name">Template revisao noturna</span><span class="stack-val">R$17</span></div>
+        <div class="stack-row"><span class="stack-name">Lista de primeiras acoes</span><span class="stack-val">R$17</span></div>
+        <div class="stack-row"><span class="stack-name">Guia de audio para TDAH</span><span class="stack-val">R$17</span></div>
+        <div class="stack-total">
+          <span class="l">Valor total</span>
+          <span class="r">R$176 → R$37</span>
+        </div>
+      </div>
+
+      <div class="price-was">De R$176</div>
+      <div class="price-big">R$37</div>
+      <div class="price-note">Pagamento unico · Acesso imediato · Vitalicio</div>
+
+      <div class="price-perks">
+        <span class="price-perk">Garantia de 7 dias</span>
+        <span class="price-perk">Entrega em 1 minuto</span>
+        <span class="price-perk">Funciona amanha de manha</span>
+      </div>
+
+      <a href="https://pay.kiwify.com.br/CGGj3gY" class="btn-cta">Quero o Foco no Caos agora →</a>
+      <div class="price-guarantee-note">Garantia de 7 dias. Se nao gostar, dinheiro de volta.</div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIONS -->
+<section>
+  <div class="container">
+    <div class="section-label">Duvidas frequentes</div>
+    <h2 class="section-title">Voce provavelmente<br>esta pensando...</h2>
+
+    <div class="obj-list">
+      <div class="obj-item">
+        <div class="obj-q">"Ja tentei outros sistemas e nao funcionou."</div>
+        <div class="obj-a">Este nao e um sistema generico de produtividade. Foi criado especificamente para como o cerebro com TDAH funciona — nao para o cerebro neurotipico que aprende por repeticao e habito. Se voce tentou Pomodoro, GTD ou Notion e nao durou, e porque esses sistemas foram feitos para outro tipo de cerebro. Este nao.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q">"Nao tenho tempo para aprender mais uma coisa."</div>
+        <div class="obj-a">O PDF tem 18 paginas. Voce pode ler o essencial em 20 minutos e usar a planilha no mesmo dia. Nao e um curso que voce precisa estudar — e uma ferramenta que voce usa. A diferenca e grande.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q">"R$37 e muito para um PDF."</div>
+        <div class="obj-a">Voce provavelmente ja gastou mais em aplicativos de produtividade que nao usa mais. Aqui voce tem garantia de 7 dias: se nao funcionar, dinheiro de volta. Voce literalmente nao tem nada a perder.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q">"Nao sei se tenho TDAH de verdade."</div>
+        <div class="obj-a">Diagnostico nao e requisito. Se voce se identifica com os padroes — trava antes de comecar, planeja e nao faz, abandona sistemas — o Foco no Caos foi feito para voce. Muitos usuarios nao tem diagnostico formal e reportam os mesmos resultados.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q">"E se eu comprar e abandonar como faco com tudo?"</div>
+        <div class="obj-a">Essa e exatamente a razao pela qual o sistema tem 10 minutos de rotina — nao 1 hora. Quanto menor o esforco de entrada, menor a chance de abandonar. E se um dia voce nao usar, tudo bem: cada dia e um dia zero. Voce pode comecar de novo a qualquer momento.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section style="text-align:center; padding: 80px 0; border-bottom:none;">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Ultima chance</div>
+    <h2 class="section-title" style="text-align:center; max-width:500px; margin:0 auto 20px;">
+      Amanha de manha pode<br>ser diferente.
+    </h2>
+    <p class="section-body" style="text-align:center; max-width:480px; margin:0 auto 36px;">
+      Cada dia que passa travado e um dia que nao volta. Voce esta a R$37 de ter um sistema que funciona para o seu cerebro — hoje a noite, amanha de manha.
+    </p>
+    <a href="#preco" class="btn-primary" style="font-size:17px; padding:20px 48px;">
+      Quero comecar agora por R$37 →
+    </a>
+    <p style="margin-top:16px; font-size:13px; color:var(--ink-soft);">
+      Garantia de 7 dias · Acesso imediato · Pagamento unico
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>Foco no Caos — O sistema de 5 blocos para TDAH</p>
+  <p>Garantia de 7 dias · Suporte: contato@focono caos.com</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.obj-item').forEach(item => {
+    item.querySelector('.obj-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.obj-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
